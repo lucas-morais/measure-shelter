@@ -7,73 +7,73 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document("Ilha")
 public class Ilha {
-  
-    @Id
-    private String id;
-    private String name;
-    private String latitude;
-    private String longitude;
-    private boolean operante;
-    @DBRef
-    private List<Medicao> medicoes;
-    
-    public Ilha(String id, String name, String latitude, String longitude, boolean operante,
-        List<Medicao> medicoes) {
-      super();
-      this.id = id;
-      this.name = name;
-      this.latitude = latitude;
-      this.longitude = longitude;
-      this.operante = operante;
-      this.medicoes = medicoes;
-    }
 
-    public String getId() {
-      return id;
-    }
+  @Id
+  private String id;
+  private String nome;
+  private String latitude;
+  private String longitude;
+  private boolean operante;
+  @DBRef
+  private List<Medicao> medicoes;
 
-    public void setId(String id) {
-      this.id = id;
-    }
+  public Ilha(String id, String nome, String latitude, String longitude, boolean operante,
+      List<Medicao> medicoes) {
+    super();
+    this.id = id;
+    this.nome = nome;
+    this.latitude = latitude;
+    this.longitude = longitude;
+    this.operante = operante;
+    this.medicoes = medicoes;
+  }
 
-    public String getName() {
-      return name;
-    }
+  public String getId() {
+    return id;
+  }
 
-    public void setName(String name) {
-      this.name = name;
-    }
+  public void setId(String id) {
+    this.id = id;
+  }
 
-    public String getLatitude() {
-      return latitude;
-    }
+  public String getNome() {
+    return nome;
+  }
 
-    public void setLatitude(String latitude) {
-      this.latitude = latitude;
-    }
+  public void setNome(String nome) {
+    this.nome = nome;
+  }
 
-    public String getLongitude() {
-      return longitude;
-    }
+  public String getLatitude() {
+    return latitude;
+  }
 
-    public void setLongitude(String longitude) {
-      this.longitude = longitude;
-    }
+  public void setLatitude(String latitude) {
+    this.latitude = latitude;
+  }
 
-    public boolean isOperante() {
-      return operante;
-    }
+  public String getLongitude() {
+    return longitude;
+  }
 
-    public void setOperante(boolean operante) {
-      this.operante = operante;
-    }
+  public void setLongitude(String longitude) {
+    this.longitude = longitude;
+  }
 
-    public List<Medicao> getMedicoes() {
-      return medicoes;
-    }
+  public boolean isOperante() {
+    return operante;
+  }
 
-    public void setMedicoes(List<Medicao> medicoes) {
-      this.medicoes = medicoes;
-    }
-    
+  public void setOperante(boolean operante) {
+    this.operante = operante;
+  }
+
+  public List<Medicao> getMedicoes() {
+    return medicoes;
+  }
+
+  public void setMedicoes(List<Medicao> medicoes) {
+    this.medicoes = medicoes;
+  }
+
 }

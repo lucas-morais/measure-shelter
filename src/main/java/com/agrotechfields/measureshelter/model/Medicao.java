@@ -5,17 +5,43 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document("Medicao")
 public class Medicao {
-  
+
   @Id
   private String id;
-  private float valor;
-  private TipoDeMedicao tipoDeMedicao;
-  
-  public Medicao(String id, float valor, TipoDeMedicao tipoDeMedicao) {
+  private float temperatura;
+  private float umidadeAr;
+  private float umidadeSolo;
+
+  public Medicao(String id, float temperatura, float umidadeAr, float umidadeSolo) {
     super();
     this.id = id;
-    this.valor = valor;
-    this.tipoDeMedicao = tipoDeMedicao;
+    this.temperatura = temperatura;
+    this.umidadeAr = umidadeAr;
+    this.umidadeSolo = umidadeSolo;
+  }
+
+  public float getTemperatura() {
+    return temperatura;
+  }
+
+  public void setTemperatura(float temperatura) {
+    this.temperatura = temperatura;
+  }
+
+  public float getUmidadeAr() {
+    return umidadeAr;
+  }
+
+  public void setUmidadeAr(float umidadeAr) {
+    this.umidadeAr = umidadeAr;
+  }
+
+  public float getUmidadeSolo() {
+    return umidadeSolo;
+  }
+
+  public void setUmidadeSolo(float umidadeSolo) {
+    this.umidadeSolo = umidadeSolo;
   }
 
   public String getId() {
@@ -25,21 +51,4 @@ public class Medicao {
   public void setId(String id) {
     this.id = id;
   }
-
-  public float getValor() {
-    return valor;
-  }
-
-  public void setValor(float valor) {
-    this.valor = valor;
-  }
-
-  public TipoDeMedicao getTipoDeMedicao() {
-    return tipoDeMedicao;
-  }
-
-  public void setTipoDeMedicao(TipoDeMedicao tipoDeMedicao) {
-    this.tipoDeMedicao = tipoDeMedicao;
-  }
-  
 }
