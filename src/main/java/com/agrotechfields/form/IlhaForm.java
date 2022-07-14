@@ -1,5 +1,7 @@
 package com.agrotechfields.form;
 
+import com.agrotechfields.measureshelter.model.Ilha;
+
 public class IlhaForm {
   private String nome;
   private String latitude;
@@ -30,5 +32,12 @@ public class IlhaForm {
     this.longitude = longitude;
   }
 
+  public Ilha converter() {
+    Ilha ilha = new Ilha();
+    ilha.setNome(nome);
+    ilha.setLatitude(latitude);
+    ilha.setLongitude(longitude);
+    return ilha;
+  }
   
 }
