@@ -30,4 +30,8 @@ public class IlhaService {
     Optional<Ilha> ilha = ilhaRepository.findById(id);
     return new IlhaDto(ilha.get());
   }
+
+  public void deletar(String id) {
+    ilhaRepository.deleteById(id);
+  }
 }
