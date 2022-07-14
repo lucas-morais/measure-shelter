@@ -2,6 +2,7 @@ package com.agrotechfields.measureshelter.dto;
 
 import java.util.List;
 
+import com.agrotechfields.measureshelter.model.Ilha;
 import com.agrotechfields.measureshelter.model.Medicao;
 
 public class IlhaDto {
@@ -10,14 +11,24 @@ public class IlhaDto {
   private String nome;
   private String latitude;
   private String longitude;
+  private boolean operante;
+  public boolean isOperante() {
+    return operante;
+  }
+
+  public void setOperante(boolean operante) {
+    this.operante = operante;
+  }
+
   private List<Medicao> medicoes;
 
-  public IlhaDto(String id, String nome, String latitude, String longitude, List<Medicao> medicoes) {
-    this.id = id;
-    this.nome = nome;
-    this.latitude = latitude;
-    this.longitude = longitude;
-    this.medicoes = medicoes;
+  public IlhaDto(Ilha ilha) {
+    this.id = ilha.getId();
+    this.nome = ilha.getNome();
+    this.latitude = ilha.getLatitude();
+    this.longitude = ilha.getLongitude();
+    this.medicoes = ilha.getMedicoes();
+    this.operante = ilha.isOperante();
   }
 
   public String getId() {
