@@ -12,14 +12,7 @@ public class IlhaDto {
   private String latitude;
   private String longitude;
   private boolean operante;
-  public boolean isOperante() {
-    return operante;
-  }
-
-  public void setOperante(boolean operante) {
-    this.operante = operante;
-  }
-
+  
   private List<Medicao> medicoes;
 
   public IlhaDto(Ilha ilha) {
@@ -50,5 +43,12 @@ public class IlhaDto {
   public List<Medicao> getMedicoes() {
     return medicoes;
   }
+  
+  public boolean isOperante() {
+    return operante;
+  }
 
+  public void setOperante(boolean operante) {
+    this.operante = operante;
+  }
 }
