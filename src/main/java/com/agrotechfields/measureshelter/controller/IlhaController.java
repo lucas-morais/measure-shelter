@@ -7,16 +7,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.agrotechfields.measureshelter.dto.IlhaDto;
 import com.agrotechfields.measureshelter.dto.IlhaStatusDto;
 import com.agrotechfields.measureshelter.form.IlhaForm;
+import com.agrotechfields.measureshelter.form.IlhaStatusForm;
 import com.agrotechfields.measureshelter.model.Ilha;
 import com.agrotechfields.measureshelter.service.IlhaService;
 
@@ -40,7 +42,7 @@ public class IlhaController {
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<IlhaDto> buscarPorId(@RequestParam String id) {
+  public ResponseEntity<IlhaDto> buscarPorId(@PathVariable String id) {
     IlhaDto ilha = ilhaService.buscarPorId(id);
 
     return ResponseEntity.ok(ilha);
@@ -48,20 +50,20 @@ public class IlhaController {
 
   @DeleteMapping("/{id}")
   @ResponseStatus(code = HttpStatus.NO_CONTENT)
-  public void deletar(@RequestParam String id ) {
+  public void deletar(@PathVariable String id ) {
     ilhaService.deletar(id);
   }
 
   @PostMapping("/{id}")
-  public ResponseEntity<IlhaDto> atualizar(@RequestBody Ilha ilha, @RequestParam String id) {
+  public ResponseEntity<IlhaDto> atualizar(@RequestBody Ilha ilha, @PathVariable String id) {
     IlhaDto ilhaAtualizada = ilhaService.Atualizar(ilha, id);
 
     return ResponseEntity.ok(ilhaAtualizada);
   }
 
-  @PostMapping("/{id}/status")
-  public ResponseEntity<IlhaStatusDto> status(@RequestBody boolean status, @RequestParam String id) {
-    IlhaStatusDto ilhaStatus = ilhaService.status(status, id);
+  @PatchMapping("/{id}/status")
+  public ResponseEntity<IlhaStatusDto> status(@RequestBody IlhaStatusForm status, @PathVariable String id) {
+    IlhaStatusDto ilhaStatus = ilhaService.status(status.isStatus(), id);
 
     return ResponseEntity.ok(ilhaStatus);
   }

@@ -20,6 +20,14 @@ public class Medicao {
     this.umidadeSolo = umidadeSolo;
   }
 
+  public String getId() {
+    return id;
+  }
+
+  public void setId(String id) {
+    this.id = id;
+  }
+
   public float getTemperatura() {
     return temperatura;
   }
@@ -44,11 +52,5 @@ public class Medicao {
     this.umidadeSolo = umidadeSolo;
   }
 
-  public String getId() {
-    return id;
-  }
-
-  public void setId(String id) {
-    this.id = id;
-  }
+  
 }
