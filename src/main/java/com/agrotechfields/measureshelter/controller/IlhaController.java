@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.agrotechfields.measureshelter.dto.IlhaDto;
+import com.agrotechfields.measureshelter.dto.IlhaStatusDto;
 import com.agrotechfields.measureshelter.form.IlhaForm;
 import com.agrotechfields.measureshelter.model.Ilha;
 import com.agrotechfields.measureshelter.service.IlhaService;
@@ -56,5 +57,12 @@ public class IlhaController {
     IlhaDto ilhaAtualizada = ilhaService.Atualizar(ilha, id);
 
     return ResponseEntity.ok(ilhaAtualizada);
+  }
+
+  @PostMapping("/{id}/status")
+  public ResponseEntity<IlhaStatusDto> status(@RequestBody boolean status, @RequestParam String id) {
+    IlhaStatusDto ilhaStatus = ilhaService.status(status, id);
+
+    return ResponseEntity.ok(ilhaStatus);
   }
 }

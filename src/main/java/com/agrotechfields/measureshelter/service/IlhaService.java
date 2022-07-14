@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.agrotechfields.measureshelter.dto.IlhaDto;
+import com.agrotechfields.measureshelter.dto.IlhaStatusDto;
 import com.agrotechfields.measureshelter.form.IlhaForm;
 import com.agrotechfields.measureshelter.model.Ilha;
 import com.agrotechfields.measureshelter.repository.IlhaRepository;
@@ -48,5 +49,13 @@ public class IlhaService {
     ilhaEncontrada.setOperante(ilha.isOperante());
 
     return new IlhaDto(ilhaEncontrada);
+  }
+
+  @Transactional
+  public IlhaStatusDto status(boolean status, String id) {
+    Ilha ilhaEncontrada = ilhaRepository.findById(id).get();
+    ilhaEncontrada.setOperante(status);
+
+    return new IlhaStatusDto(ilhaEncontrada.getId(), ilhaEncontrada.isOperante());
   }
 }
