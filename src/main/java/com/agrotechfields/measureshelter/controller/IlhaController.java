@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.agrotechfields.form.IlhaForm;
 import com.agrotechfields.measureshelter.dto.IlhaDto;
+import com.agrotechfields.measureshelter.form.IlhaForm;
 import com.agrotechfields.measureshelter.model.Ilha;
 import com.agrotechfields.measureshelter.service.IlhaService;
 
