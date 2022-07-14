@@ -50,4 +50,11 @@ public class IlhaController {
   public void deletar(@RequestParam String id ) {
     ilhaService.deletar(id);
   }
+
+  @PostMapping("/{id}")
+  public ResponseEntity<IlhaDto> atualizar(@RequestBody Ilha ilha, @RequestParam String id) {
+    IlhaDto ilhaAtualizada = ilhaService.Atualizar(ilha, id);
+
+    return ResponseEntity.ok(ilhaAtualizada);
+  }
 }

@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.agrotechfields.measureshelter.dto.IlhaDto;
 import com.agrotechfields.measureshelter.form.IlhaForm;
@@ -21,6 +22,7 @@ public class IlhaService {
     return ilhaRepository.findAll();
   }
 
+  @Transactional
   public IlhaDto cadastrar(IlhaForm ilhaForm) {
     Ilha ilha = ilhaRepository.save(ilhaForm.converter());
     return new IlhaDto(ilha);
@@ -31,7 +33,20 @@ public class IlhaService {
     return new IlhaDto(ilha.get());
   }
 
+  @Transactional
   public void deletar(String id) {
     ilhaRepository.deleteById(id);
+  }
+
+  @Transactional
+  public IlhaDto Atualizar(Ilha ilha, String id) {
+    Ilha ilhaEncontrada = ilhaRepository.findById(id).get();
+    ilhaEncontrada.setLatitude(ilha.getLatitude());
+    ilhaEncontrada.setLongitude(ilha.getLongitude());
+    ilhaEncontrada.setMedicoes(ilha.getMedicoes());
+    ilhaEncontrada.setNome(ilha.getNome());
+    ilhaEncontrada.setOperante(ilha.isOperante());
+
+    return new IlhaDto(ilhaEncontrada);
   }
 }
