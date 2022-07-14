@@ -1,6 +1,5 @@
 package com.agrotechfields.measureshelter.dto;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.agrotechfields.measureshelter.model.Medicao;
