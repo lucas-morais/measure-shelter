@@ -18,13 +18,18 @@ public class Ilha {
   @DBRef
   private List<Medicao> medicoes;
 
-  public Ilha(String id, String nome, String latitude, String longitude) {
+  public Ilha() {
+    this.operante = true;
+    this.medicoes = new ArrayList<>();
+  }
+
+  public Ilha(String id, String nome, String latitude, String longitude, boolean operante, List<Medicao>medicoes) {
     this.id = id;
     this.nome = nome;
     this.latitude = latitude;
     this.longitude = longitude;
-    this.operante = true;
-    this.medicoes = new ArrayList<>();
+    this.operante = operante;
+    this.medicoes = medicoes;
   }
 
   public String getId() {
