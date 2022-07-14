@@ -1,5 +1,6 @@
 package com.agrotechfields.measureshelter.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -17,15 +18,13 @@ public class Ilha {
   @DBRef
   private List<Medicao> medicoes;
 
-  public Ilha(String id, String nome, String latitude, String longitude, boolean operante,
-      List<Medicao> medicoes) {
-    super();
+  public Ilha(String id, String nome, String latitude, String longitude) {
     this.id = id;
     this.nome = nome;
     this.latitude = latitude;
     this.longitude = longitude;
-    this.operante = operante;
-    this.medicoes = medicoes;
+    this.operante = true;
+    this.medicoes = new ArrayList<>();
   }
 
   public String getId() {
