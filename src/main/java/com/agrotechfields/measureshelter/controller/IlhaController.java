@@ -62,8 +62,8 @@ public class IlhaController {
   }
 
   @PatchMapping("/{id}/status")
-  public ResponseEntity<IlhaStatusDto> status(@RequestBody IlhaStatusForm status, @PathVariable String id) {
-    IlhaStatusDto ilhaStatus = ilhaService.status(status.isStatus(), id);
+  public ResponseEntity<IlhaStatusDto> status(@RequestBody IlhaStatusForm statusForm, @PathVariable String id) {
+    IlhaStatusDto ilhaStatus = ilhaService.status(statusForm.isStatus(), id);
 
     return ResponseEntity.ok(ilhaStatus);
   }
