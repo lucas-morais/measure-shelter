@@ -1,6 +1,7 @@
 package com.agrotechfields.measureshelter.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,4 +26,8 @@ public class IlhaService {
     return new IlhaDto(ilha);
   }
 
+  public IlhaDto buscarPorId(String id) {
+    Optional<Ilha> ilha = ilhaRepository.findById(id);
+    return new IlhaDto(ilha.get());
+  }
 }

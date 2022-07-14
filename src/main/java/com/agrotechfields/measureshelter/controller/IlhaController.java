@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.agrotechfields.measureshelter.dto.IlhaDto;
@@ -32,5 +33,12 @@ public class IlhaController {
   public ResponseEntity<IlhaDto> cadastrar(@RequestBody IlhaForm ilhaForm) {
     IlhaDto ilha = ilhaService.cadastrar(ilhaForm);
     return ResponseEntity.status(201).body(ilha);
+  }
+
+  @GetMapping("/{id}")
+  public ResponseEntity<IlhaDto> buscarPorId(@RequestParam String id) {
+    IlhaDto ilha = ilhaService.buscarPorId(id);
+
+    return ResponseEntity.ok(ilha);
   }
 }
