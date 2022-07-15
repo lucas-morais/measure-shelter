@@ -21,7 +21,7 @@ import com.agrotechfields.measureshelter.model.Medicao;
 import com.agrotechfields.measureshelter.service.MedicaoService;
 
 @RestController
-@RequestMapping("/medicao")
+@RequestMapping("/medicoes")
 public class MedicaoController {
 
   @Autowired
