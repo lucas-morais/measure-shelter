@@ -7,7 +7,6 @@ public class IlhaForm {
   private String latitude;
   private String longitude;
   
-  
   public IlhaForm(String nome, String latitude, String longitude) {
     this.nome = nome;
     this.latitude = latitude;
@@ -39,7 +38,7 @@ public class IlhaForm {
   }
 
   /**
-   * Convete.
+   * Converte.
    * @return ilha
    */
   public Ilha converter() {
