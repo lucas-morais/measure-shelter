@@ -1,17 +1,18 @@
 package com.agrotechfields.measureshelter.dto;
 
+import com.agrotechfields.measureshelter.model.Medicao;
+
 public class MedicaoDto {
   private String id;
   private float temperatura;
   private float umidadeAr;
   private float umidadeSolo;
 
-  public MedicaoDto(String id, float temperatura, float umidadeAr,
-    float umidadeSolo) {
-      this.id = id;
-      this.temperatura = temperatura;
-      this.umidadeAr = umidadeAr;
-      this.umidadeSolo = umidadeSolo;
+  public MedicaoDto(Medicao medicao) {
+      this.id = medicao.getId();
+      this.temperatura = medicao.getTemperatura();
+      this.umidadeAr = medicao.getUmidadeAr();
+      this.umidadeSolo = medicao.getUmidadeSolo();
   }
 
   public String getId() {
@@ -45,7 +46,5 @@ public class MedicaoDto {
   public void setUmidadeSolo(float umidadeSolo) {
     this.umidadeSolo = umidadeSolo;
   }
-  
-  
-    
+
 }
