@@ -57,7 +57,7 @@ public class IlhaController {
 
   @PutMapping("/{id}")
   public ResponseEntity<IlhaDto> atualizar(@RequestBody Ilha ilha, @PathVariable String id) {
-    IlhaDto ilhaAtualizada = ilhaService.Atualizar(ilha, id);
+    IlhaDto ilhaAtualizada = ilhaService.atualizar(ilha, id);
 
     return ResponseEntity.ok(ilhaAtualizada);
   }
