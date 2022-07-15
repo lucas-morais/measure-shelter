@@ -3,14 +3,25 @@ package com.agrotechfields.measureshelter.form;
 import com.agrotechfields.measureshelter.model.Medicao;
 
 public class MedicaoForm {
+  
+  private String ilhaId;
   private float temperatura;
   private float umidadeAr;
   private float umidadeSolo;
-
-  public MedicaoForm(float temperatura, float umidadeAr, float umidadeSolo) {
+  
+  public MedicaoForm(String ilhaId, float temperatura, float umidadeAr, float umidadeSolo) {
+    this.ilhaId = ilhaId;
     this.temperatura = temperatura;
     this.umidadeAr = umidadeAr;
     this.umidadeSolo = umidadeSolo;
+  }
+
+  public String getIlhaId() {
+    return ilhaId;
+  }
+
+  public void setIlhaId(String ilhaId) {
+    this.ilhaId = ilhaId;
   }
 
   public float getTemperatura() {
