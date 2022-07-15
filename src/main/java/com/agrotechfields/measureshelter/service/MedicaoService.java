@@ -42,4 +42,13 @@ public class MedicaoService {
     medicaoRepository.deleteById(id);
   }
 
+  @Transactional
+  public MedicaoDto atualizar(Medicao medicao, String id) {
+    Medicao medicaoEncontrada = medicaoRepository.findById(id).get();
+    medicaoEncontrada.setTemperatura(medicao.getTemperatura());
+    medicaoEncontrada.setUmidadeAr(medicao.getTemperatura());
+    medicaoEncontrada.setUmidadeSolo(medicao.getUmidadeSolo());
+
+    return new MedicaoDto(medicaoEncontrada);
+  }
 }

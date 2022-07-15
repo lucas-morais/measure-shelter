@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -51,5 +52,12 @@ public class MedicaoController {
   @ResponseStatus(code = HttpStatus.NO_CONTENT)
   public void deletar(@PathVariable String id) {
     medicaoService.deletar(id);
+  }
+
+  @PutMapping("/{id}")
+  public ResponseEntity<MedicaoDto> cadastrar(@RequestBody Medicao medicao, @PathVariable String id) {
+    MedicaoDto medicaoAtualizada = medicaoService.atualizar(medicao, id);
+
+    return ResponseEntity.ok(medicaoAtualizada);
   }
 }
