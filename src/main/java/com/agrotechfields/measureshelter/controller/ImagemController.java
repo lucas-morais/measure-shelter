@@ -1,7 +1,6 @@
 package com.agrotechfields.measureshelter.controller;
 
 import java.io.IOException;
-import java.util.Base64;
 
 import org.bson.types.Binary;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,20 +22,22 @@ public class ImagemController {
   @Autowired
   private ImagemService imagemService;
 
-  @PostMapping("/imagem/{nome}")
+  @PostMapping("/imagens/{nome}")
   public String addPhoto(@PathVariable("nome") String nome,
-      @RequestParam("image") MultipartFile image, Model model)
+      @RequestParam("imagem") MultipartFile imagem)
       throws IOException {
-    String id = imagemService.addImagem(nome, image);
+    String id = imagemService.addImagem(nome, imagem);
     return id;
   }
 
-  @GetMapping("/imagem/{id}")
-  public ResponseEntity<Imagem> getPhoto(@PathVariable String id, Model model) {
+  @GetMapping(
+    value = "/imagens/{id}",
+    produces = MediaType.IMAGE_JPEG_VALUE
+  )
+  public ResponseEntity<byte[]> getPhoto(@PathVariable String id) {
     Imagem imagem = imagemService.buscarImagem(id);
-    model.addAttribute("nome", imagem.getNome());
-    model.addAttribute("image",imagem.getImagem().getData());
-    return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imagem);
+    
+    return ResponseEntity.ok().body(imagem.getImagem().getData());
   }
 
 }
