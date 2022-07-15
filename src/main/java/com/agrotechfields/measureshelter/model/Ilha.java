@@ -80,4 +80,8 @@ public class Ilha {
     this.medicoes = medicoes;
   }
 
+  public void addMedicao(Medicao medicao) {
+    this.medicoes.add(medicao);
+  }
+
 }
