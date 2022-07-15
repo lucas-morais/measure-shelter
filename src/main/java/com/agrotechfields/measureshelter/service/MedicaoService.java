@@ -37,5 +37,9 @@ public class MedicaoService {
     return new MedicaoDto(medicao.get());
   }
 
-  
+  @Transactional
+  public void deletar(String id) {
+    medicaoRepository.deleteById(id);
+  }
+
 }
