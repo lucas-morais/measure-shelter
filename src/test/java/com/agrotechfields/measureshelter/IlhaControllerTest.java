@@ -14,8 +14,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import com.agrotechfields.measureshelter.service.IlhaService;
+import com.agrotechfields.measureshelter.controller.IlhaController;
 
-@WebMvcTest(IllhaController.class)
+@WebMvcTest(IlhaController.class)
 public class IlhaControllerTest {
 
   @Autowired
