@@ -2,4 +2,4 @@ build:
   docker:
     web: Dockerfile
 run:
-  java -Djava.security.egd=file:/dev/./urandom -jar /app/app.jar
+  web: java -Djava.security.egd=file:/dev/./urandom -jar /app/app.jar
