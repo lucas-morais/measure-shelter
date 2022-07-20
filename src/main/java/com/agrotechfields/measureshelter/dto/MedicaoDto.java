@@ -8,11 +8,12 @@ public class MedicaoDto {
   private float umidadeAr;
   private float umidadeSolo;
 
+  /** constructor. */
   public MedicaoDto(Medicao medicao) {
-      this.id = medicao.getId();
-      this.temperatura = medicao.getTemperatura();
-      this.umidadeAr = medicao.getUmidadeAr();
-      this.umidadeSolo = medicao.getUmidadeSolo();
+    this.id = medicao.getId();
+    this.temperatura = medicao.getTemperatura();
+    this.umidadeAr = medicao.getUmidadeAr();
+    this.umidadeSolo = medicao.getUmidadeSolo();
   }
 
   public String getId() {

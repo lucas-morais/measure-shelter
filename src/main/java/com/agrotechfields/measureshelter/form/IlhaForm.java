@@ -7,6 +7,7 @@ public class IlhaForm {
   private String latitude;
   private String longitude;
   
+  /** Construct. */
   public IlhaForm(String nome, String latitude, String longitude) {
     this.nome = nome;
     this.latitude = latitude;
