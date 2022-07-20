@@ -2,7 +2,6 @@ package com.agrotechfields.measureshelter;
 
 import static org.mockito.Mockito.doReturn;
 
-import java.util.ArrayList;
 import java.util.List;
 import org.hamcrest.CoreMatchers;
 import static org.hamcrest.Matchers.hasSize;
@@ -16,12 +15,14 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import com.agrotechfields.measureshelter.service.IlhaService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.agrotechfields.measureshelter.controller.IlhaController;
 import com.agrotechfields.measureshelter.dto.IlhaDto;
+import com.agrotechfields.measureshelter.form.IlhaForm;
 import com.agrotechfields.measureshelter.model.Ilha;
-import com.agrotechfields.measureshelter.model.Medicao;
 
 @WebMvcTest(IlhaController.class)
 public class IlhaControllerTest {
@@ -49,7 +50,7 @@ public class IlhaControllerTest {
   @Test
   @DisplayName("deve retornanr lista de ilhas quando houver ilhas cadastradas")
   void deve_retornar_lista_de_ilhas() throws Exception {
-    IlhaDto ilha = criaIlha();
+    IlhaDto ilha = criaIlhaMock();
     doReturn(List.of(ilha)).when(ilhaService).listar();
 
     final var resposta = mockMvc.perform(get("/ilhas"));
@@ -64,7 +65,30 @@ public class IlhaControllerTest {
         .andExpect(jsonPath("$[0].medicoes").isEmpty());
   }
 
-  IlhaDto criaIlha() {
+  @Test
+  @DisplayName("deve cadastrar uma nova ilha")
+  void deve_cadastrar_ilha() throws Exception {
+    IlhaDto ilha = criaIlhaMock();
+    IlhaForm ilhaForm = new IlhaForm("ilha 1", "-7.115", "-34.86306");
+
+    doReturn(ilha).when(ilhaService).cadastrar(ilhaForm);
+
+    final var resposta = mockMvc.perform(post("/ilhas")
+        .contentType(MediaType.APPLICATION_JSON))
+        .content(new ObjectMapper().writeValueAsString(ilhaForm));
+
+        resposta
+        .andExpect(status().isCreated())
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+        .andExpect(jsonPath("$.id").value("1"))
+        .andExpect(jsonPath("$.nome").value("ilha 1"))
+        .andExpect(jsonPath("$.latitude").value("-7.115"))
+        .andExpect(jsonPath("$.longitude").value("-34.86306"))
+        .andExpect(jsonPath("$.operante").value(true))
+        .andExpect(jsonPath("$.medicoes").isEmpty());
+  }
+
+  IlhaDto criaIlhaMock() {
     return new IlhaDto(new Ilha(
         "1",
         "ilha 1",
