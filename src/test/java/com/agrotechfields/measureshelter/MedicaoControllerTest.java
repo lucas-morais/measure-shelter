@@ -1,5 +1,7 @@
 package com.agrotechfields.measureshelter;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
@@ -75,12 +77,16 @@ public class MedicaoControllerTest {
   void deve_cadastrar_medicao() throws Exception {
     MedicaoDto medicao = criaMedicaoMock();
     MedicaoForm medicaoForm = new MedicaoForm("1", 30, 50, 50);
-    when(medicaoService.cadastrar(medicaoForm)).thenReturn(medicao);
+    when(medicaoService.cadastrar(any(MedicaoForm.class))).thenReturn(medicao);
 
     mockMvc.perform(post("/medicoes")
         .contentType(MediaType.APPLICATION_JSON)
         .content(new ObjectMapper().writeValueAsString(medicaoForm)))
-        .andExpect(status().isCreated());
+        .andExpect(status().isCreated())
+        .andExpect(jsonPath("$.id").value(medicao.getId()))
+        .andExpect(jsonPath("$.temperatura").value(medicao.getTemperatura()))
+        .andExpect(jsonPath("$.umidadeAr").value(medicao.getUmidadeAr()))
+        .andExpect(jsonPath("$.umidadeSolo").value(medicao.getUmidadeSolo()));
   }
 
   @Test
@@ -102,12 +108,16 @@ public class MedicaoControllerTest {
   public void deve_atualizar_medicao() throws JsonProcessingException, Exception {
     MedicaoDto medicao = criaMedicaoMock();
     Medicao medicaoForm = new Medicao("1", 30, 55, 50);
-    when(medicaoService.atualizar(medicaoForm, "1")).thenReturn(medicao);
+    when(medicaoService.atualizar(any(Medicao.class), anyString())).thenReturn(medicao);
 
     mockMvc.perform(put("/medicoes/1")
         .contentType(MediaType.APPLICATION_JSON)
         .content(new ObjectMapper().writeValueAsString(medicaoForm)))
-        .andExpect(status().isOk());
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.id").value(medicao.getId()))
+        .andExpect(jsonPath("$.temperatura").value(medicao.getTemperatura()))
+        .andExpect(jsonPath("$.umidadeAr").value(medicao.getUmidadeAr()))
+        .andExpect(jsonPath("$.umidadeSolo").value(medicao.getUmidadeSolo()));
   }
 
   @Test
