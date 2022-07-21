@@ -36,6 +36,7 @@ public class MedicaoService {
     return new MedicaoDto(medicao);
   }
 
+  /**Busca medicao por id.*/
   public MedicaoDto buscarPorId(String id) {
     try {
       Optional<Medicao> medicao = medicaoRepository.findById(id);
@@ -45,6 +46,7 @@ public class MedicaoService {
     }
   }
 
+  /**Deleta medicao.*/
   @Transactional
   public void deletar(String id) {
     try {
