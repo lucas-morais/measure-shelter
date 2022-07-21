@@ -1,5 +1,8 @@
 package com.agrotechfields.measureshelter;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyBoolean;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
@@ -14,6 +17,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -80,11 +84,18 @@ public class IlhaControllerTest {
     IlhaDto ilha = criaIlhaMock();
     IlhaForm ilhaForm = new IlhaForm("ilha 1", "-7.115", "-34.86306");
 
-    when(ilhaService.cadastrar(ilhaForm)).thenReturn(ilha);
+    when(ilhaService.cadastrar(any(IlhaForm.class))).thenReturn(ilha);
 
     mockMvc.perform(post("/ilhas")
         .contentType(MediaType.APPLICATION_JSON)
-        .content(new ObjectMapper().writeValueAsString(ilhaForm))).andExpect(status().isCreated());
+        .content(new ObjectMapper().writeValueAsString(ilhaForm)))
+        .andExpect(status().isCreated())
+        .andExpect(jsonPath("$.nome").value(ilha.getNome()))
+        .andExpect(jsonPath("$.latitude").value(ilha.getLatitude()))
+        .andExpect(jsonPath("$.longitude").value(ilha.getLongitude()))
+        .andExpect(jsonPath("$.operante").value(ilha.isOperante()))
+        .andExpect(jsonPath("$.medicoes").isEmpty());
+
   }
 
   @Test
@@ -110,12 +121,17 @@ public class IlhaControllerTest {
   public void deve_atualizar_ilha() throws JsonProcessingException, Exception {
     IlhaDto ilhaDto = criaIlhaMock();
     Ilha ilha = new Ilha("1", "novo nome", "-7.115", "-34.86306", true, List.of());
-    when(ilhaService.atualizar(ilha, "1")).thenReturn(ilhaDto);
+    when(ilhaService.atualizar(any(Ilha.class), anyString())).thenReturn(ilhaDto);
 
     mockMvc.perform(put("/ilhas/1")
         .contentType(MediaType.APPLICATION_JSON)
         .content(new ObjectMapper().writeValueAsString(ilha)))
-        .andExpect(status().isOk());
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.nome").value(ilhaDto.getNome()))
+        .andExpect(jsonPath("$.latitude").value(ilhaDto.getLatitude()))
+        .andExpect(jsonPath("$.longitude").value(ilhaDto.getLongitude()))
+        .andExpect(jsonPath("$.operante").value(ilhaDto.isOperante()))
+        .andExpect(jsonPath("$.medicoes").isEmpty());;
   }
 
   @Test
@@ -131,12 +147,15 @@ public class IlhaControllerTest {
   public void deve_alterar_status() throws Exception {
     IlhaStatusForm ilhaStatusForm = new IlhaStatusForm(false);
     IlhaStatusDto ilhaStatusDto = new IlhaStatusDto("1", false);
-    when(ilhaService.status(ilhaStatusForm.isStatus(), "id")).thenReturn(ilhaStatusDto);
+    when(ilhaService.status(anyBoolean(), anyString())).thenReturn(ilhaStatusDto);
 
     mockMvc.perform(patch("/ilhas/1/status")
     .contentType(MediaType.APPLICATION_JSON)
       .content(new ObjectMapper().writeValueAsString(ilhaStatusForm))
-    ).andExpect(status().isOk());
+    )
+      .andExpect(status().isOk())
+      .andExpect(jsonPath("$.id").value(ilhaStatusDto.getId()))
+      .andExpect(jsonPath("$.status").value(ilhaStatusDto.isStatus()));
 
   }
 
