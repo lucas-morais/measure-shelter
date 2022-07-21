@@ -18,6 +18,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -26,7 +27,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.agrotechfields.measureshelter.controller.IlhaController;
 import com.agrotechfields.measureshelter.dto.IlhaDto;
+import com.agrotechfields.measureshelter.dto.IlhaStatusDto;
 import com.agrotechfields.measureshelter.form.IlhaForm;
+import com.agrotechfields.measureshelter.form.IlhaStatusForm;
 import com.agrotechfields.measureshelter.model.Ilha;
 
 @WebMvcTest(IlhaController.class)
@@ -85,6 +88,24 @@ public class IlhaControllerTest {
   }
 
   @Test
+  @DisplayName("Deve buscar uma ilha pelo id")
+  void deve_buscar_ilha_por_id() throws Exception {
+    IlhaDto ilha = criaIlhaMock();
+    when(ilhaService.buscarPorId("1")).thenReturn(ilha);
+
+    mockMvc.perform(get("/ilhas/1")
+        .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.nome").value(ilha.getNome()))
+        .andExpect(jsonPath("$.latitude").value(ilha.getLatitude()))
+        .andExpect(jsonPath("$.longitude").value(ilha.getLongitude()))
+        .andExpect(jsonPath("$.operante").value(ilha.isOperante()))
+        .andExpect(jsonPath("$.medicoes").isEmpty());
+
+        
+  }
+
+  @Test
   @DisplayName("deve atualizar ilha ao receber dados de uma ilha e id")
   public void deve_atualizar_ilha() throws JsonProcessingException, Exception {
     IlhaDto ilhaDto = criaIlhaMock();
@@ -102,7 +123,21 @@ public class IlhaControllerTest {
   public void deve_apagar_ilha() throws Exception {
     doNothing().when(ilhaService).deletar("1");
     mockMvc.perform(delete("/ilhas/1")).andExpect(status().isNoContent());
-  
+
+  }
+
+  @Test
+  @DisplayName("Deve alterar o status de uma ilha")
+  public void deve_alterar_status() throws Exception {
+    IlhaStatusForm ilhaStatusForm = new IlhaStatusForm(false);
+    IlhaStatusDto ilhaStatusDto = new IlhaStatusDto("1", false);
+    when(ilhaService.status(ilhaStatusForm.isStatus(), "id")).thenReturn(ilhaStatusDto);
+
+    mockMvc.perform(patch("/ilhas/1/status")
+    .contentType(MediaType.APPLICATION_JSON)
+      .content(new ObjectMapper().writeValueAsString(ilhaStatusForm))
+    ).andExpect(status().isOk());
+
   }
 
   IlhaDto criaIlhaMock() {
