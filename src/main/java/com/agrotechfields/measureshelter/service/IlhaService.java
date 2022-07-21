@@ -28,20 +28,21 @@ public class IlhaService {
     return new IlhaDto(ilha);
   }
 
+  /** Busca ilha por id. */
   public IlhaDto buscarPorId(String id) {
     try {
       Optional<Ilha> ilha = ilhaRepository.findById(id);
-      
       return new IlhaDto(ilha.get());
     } catch (Exception e) {
       throw new NotFoundException("Ilha não encontrada.");
     }
   }
 
+  /**Deleta ilha. */
   @Transactional
   public void deletar(String id) {
     try {
-      ilhaRepository.deleteById(id);      
+      ilhaRepository.deleteById(id);
     } catch (Exception e) {
       throw new NotFoundException("Ilha não encontrada.");
     }
@@ -58,7 +59,7 @@ public class IlhaService {
       ilhaEncontrada.setNome(ilha.getNome());
       ilhaEncontrada.setOperante(ilha.isOperante());
       ilhaRepository.save(ilhaEncontrada);
-  
+
       return new IlhaDto(ilhaEncontrada);
     } catch (Exception e) {
       throw new NotFoundException("Ilha não encontrada.");
@@ -73,7 +74,7 @@ public class IlhaService {
       Ilha ilhaEncontrada = ilhaRepository.findById(id).get();
       ilhaEncontrada.setOperante(status);
       ilhaRepository.save(ilhaEncontrada);
-  
+
       return new IlhaStatusDto(ilhaEncontrada.getId(), ilhaEncontrada.isOperante());
     } catch (Exception e) {
       throw new NotFoundException("Ilha não encontrada.");

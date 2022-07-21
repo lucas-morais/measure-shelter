@@ -1,15 +1,32 @@
 package com.agrotechfields.measureshelter;
 
+import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.agrotechfields.measureshelter.controller.IlhaController;
+import com.agrotechfields.measureshelter.dto.IlhaDto;
+import com.agrotechfields.measureshelter.dto.IlhaStatusDto;
+import com.agrotechfields.measureshelter.form.IlhaForm;
+import com.agrotechfields.measureshelter.form.IlhaStatusForm;
+import com.agrotechfields.measureshelter.model.Ilha;
+import com.agrotechfields.measureshelter.service.IlhaService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
 import org.hamcrest.CoreMatchers;
-import static org.hamcrest.Matchers.hasSize;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,24 +34,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import com.agrotechfields.measureshelter.service.IlhaService;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.agrotechfields.measureshelter.controller.IlhaController;
-import com.agrotechfields.measureshelter.dto.IlhaDto;
-import com.agrotechfields.measureshelter.dto.IlhaStatusDto;
-import com.agrotechfields.measureshelter.form.IlhaForm;
-import com.agrotechfields.measureshelter.form.IlhaStatusForm;
-import com.agrotechfields.measureshelter.model.Ilha;
 
 @WebMvcTest(IlhaController.class)
 public class IlhaControllerTest {
@@ -113,7 +112,6 @@ public class IlhaControllerTest {
         .andExpect(jsonPath("$.operante").value(ilha.isOperante()))
         .andExpect(jsonPath("$.medicoes").isEmpty());
 
-        
   }
 
   @Test
@@ -131,7 +129,8 @@ public class IlhaControllerTest {
         .andExpect(jsonPath("$.latitude").value(ilhaDto.getLatitude()))
         .andExpect(jsonPath("$.longitude").value(ilhaDto.getLongitude()))
         .andExpect(jsonPath("$.operante").value(ilhaDto.isOperante()))
-        .andExpect(jsonPath("$.medicoes").isEmpty());;
+        .andExpect(jsonPath("$.medicoes").isEmpty());
+    ;
   }
 
   @Test
@@ -150,12 +149,11 @@ public class IlhaControllerTest {
     when(ilhaService.status(anyBoolean(), anyString())).thenReturn(ilhaStatusDto);
 
     mockMvc.perform(patch("/ilhas/1/status")
-    .contentType(MediaType.APPLICATION_JSON)
-      .content(new ObjectMapper().writeValueAsString(ilhaStatusForm))
-    )
-      .andExpect(status().isOk())
-      .andExpect(jsonPath("$.id").value(ilhaStatusDto.getId()))
-      .andExpect(jsonPath("$.status").value(ilhaStatusDto.isStatus()));
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(new ObjectMapper().writeValueAsString(ilhaStatusForm)))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.id").value(ilhaStatusDto.getId()))
+        .andExpect(jsonPath("$.status").value(ilhaStatusDto.isStatus()));
 
   }
 

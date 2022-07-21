@@ -28,6 +28,7 @@ public class ImagemService {
     return new ImagemDto(imagem);
   }
 
+  /** Busca imagem por id. */
   public Imagem buscarImagem(String id) {
     try {
       return imagemRepository.findById(id).get();

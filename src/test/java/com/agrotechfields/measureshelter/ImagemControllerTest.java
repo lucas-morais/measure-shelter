@@ -1,12 +1,19 @@
 package com.agrotechfields.measureshelter;
 
+import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.doReturn;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.agrotechfields.measureshelter.controller.ImagemController;
+import com.agrotechfields.measureshelter.dto.ImagemDto;
+import com.agrotechfields.measureshelter.model.Imagem;
+import com.agrotechfields.measureshelter.service.ImagemService;
 import java.util.List;
-
 import org.bson.types.Binary;
 import org.hamcrest.CoreMatchers;
-import static org.hamcrest.Matchers.hasSize;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,16 +21,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import com.agrotechfields.measureshelter.service.ImagemService;
-import com.agrotechfields.measureshelter.controller.ImagemController;
-import com.agrotechfields.measureshelter.dto.ImagemDto;
-import com.agrotechfields.measureshelter.model.Imagem;
 
 @WebMvcTest(ImagemController.class)
 public class ImagemControllerTest {
@@ -66,7 +63,6 @@ public class ImagemControllerTest {
 
   ImagemDto criaImagemMock() {
     return new ImagemDto(
-      new Imagem("1", "imagem-1", new Binary(new byte[8]))
-    );
+        new Imagem("1", "imagem-1", new Binary(new byte[8])));
   }
 }
