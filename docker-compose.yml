@@ -1,13 +1,15 @@
 version: "3.7"
 services:
   application:
+    container_name: measure-shelter-app
     build: .
     restart: always
     ports:
       - 8888:8888
-    links:
-      - mongodb:database
+    depends_on:
+      - mongodb
   mongodb:
+    container_name: meausre-shelter-mongo
     image: "mongo:latest"
     restart: always
     ports:
