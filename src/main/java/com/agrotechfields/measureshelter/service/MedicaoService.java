@@ -1,6 +1,7 @@
 package com.agrotechfields.measureshelter.service;
 
 import com.agrotechfields.measureshelter.dto.MedicaoDto;
+import com.agrotechfields.measureshelter.error.NotFoundException;
 import com.agrotechfields.measureshelter.form.MedicaoForm;
 import com.agrotechfields.measureshelter.model.Ilha;
 import com.agrotechfields.measureshelter.model.Medicao;
@@ -36,25 +37,38 @@ public class MedicaoService {
   }
 
   public MedicaoDto buscarPorId(String id) {
-    Optional<Medicao> medicao = medicaoRepository.findById(id);
-    return new MedicaoDto(medicao.get());
+    try {
+      Optional<Medicao> medicao = medicaoRepository.findById(id);
+      return new MedicaoDto(medicao.get());
+    } catch (Exception e) {
+      throw new NotFoundException("Medição não encontrada.");
+    }
   }
 
   @Transactional
   public void deletar(String id) {
-    medicaoRepository.deleteById(id);
+    try {
+      medicaoRepository.deleteById(id);
+    } catch (Exception e) {
+      throw new NotFoundException("Medição não encontrada.");
+    }
   }
 
   /** Atualiza a medicao. */
   @Transactional
   public MedicaoDto atualizar(Medicao medicao, String id) {
-    Medicao medicaoEncontrada = medicaoRepository.findById(id).get();
-    medicaoEncontrada.setTemperatura(medicao.getTemperatura());
-    medicaoEncontrada.setUmidadeAr(medicao.getUmidadeAr());
-    medicaoEncontrada.setUmidadeSolo(medicao.getUmidadeSolo());
+    try {
+      Medicao medicaoEncontrada = medicaoRepository.findById(id).get();
+      medicaoEncontrada.setTemperatura(medicao.getTemperatura());
+      medicaoEncontrada.setUmidadeAr(medicao.getUmidadeAr());
+      medicaoEncontrada.setUmidadeSolo(medicao.getUmidadeSolo());
+  
+      medicaoRepository.save(medicaoEncontrada);
+  
+      return new MedicaoDto(medicaoEncontrada);
+    } catch (Exception e) {
+      throw new NotFoundException("Medição não encontrada.");
+    }
 
-    medicaoRepository.save(medicaoEncontrada);
-
-    return new MedicaoDto(medicaoEncontrada);
   }
 }
