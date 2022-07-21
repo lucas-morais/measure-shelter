@@ -39,9 +39,8 @@ public class IlhaController {
 
   @PostMapping
   public ResponseEntity<IlhaDto> cadastrar(@RequestBody IlhaForm ilhaForm) {
-    System.out.println("-----------------"  + ilhaForm.getNome() + "------------------");
     IlhaDto ilha = ilhaService.cadastrar(ilhaForm);
-    return ResponseEntity.status(201).contentType(MediaType.APPLICATION_JSON).body(ilha);
+    return ResponseEntity.status(201).body(ilha);
   }
 
   @GetMapping("/{id}")

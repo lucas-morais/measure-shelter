@@ -1,6 +1,7 @@
 package com.agrotechfields.measureshelter;
 
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.when;
 
 import java.util.List;
 import org.hamcrest.CoreMatchers;
@@ -16,8 +17,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import com.agrotechfields.measureshelter.service.IlhaService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.agrotechfields.measureshelter.controller.IlhaController;
 import com.agrotechfields.measureshelter.dto.IlhaDto;
@@ -34,6 +37,7 @@ public class IlhaControllerTest {
   private IlhaService ilhaService;
 
   @Test
+
   @DisplayName("deve retornar lista vazia quanndo nao houver ilhas cadastradas")
   void deve_retornar_lista_vazia() throws Exception {
     doReturn(List.of()).when(ilhaService).listar();
@@ -71,21 +75,24 @@ public class IlhaControllerTest {
     IlhaDto ilha = criaIlhaMock();
     IlhaForm ilhaForm = new IlhaForm("ilha 1", "-7.115", "-34.86306");
 
-    doReturn(ilha).when(ilhaService).cadastrar(ilhaForm);
+    when(ilhaService.cadastrar(ilhaForm)).thenReturn(ilha);
 
-    final var resposta = mockMvc.perform(post("/ilhas")
-        .contentType(MediaType.APPLICATION_JSON))
-        .content(new ObjectMapper().writeValueAsString(ilhaForm));
+    mockMvc.perform(post("/ilhas")
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(new ObjectMapper().writeValueAsString(ilhaForm))).andExpect(status().isCreated());
+  }
 
-        resposta
-        .andExpect(status().isCreated())
-        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-        .andExpect(jsonPath("$.id").value("1"))
-        .andExpect(jsonPath("$.nome").value("ilha 1"))
-        .andExpect(jsonPath("$.latitude").value("-7.115"))
-        .andExpect(jsonPath("$.longitude").value("-34.86306"))
-        .andExpect(jsonPath("$.operante").value(true))
-        .andExpect(jsonPath("$.medicoes").isEmpty());
+  @Test
+  @DisplayName("Atualiza")
+  public void deve_atualizar_ilha() throws JsonProcessingException, Exception {
+    IlhaDto ilhaDto = criaIlhaMock();
+    Ilha ilha = new Ilha("1", "novo nome", "-7.115", "-34.86306", true, List.of());
+    when(ilhaService.atualizar(ilha, "1")).thenReturn(ilhaDto);
+
+    mockMvc.perform(put("/ilhas/1")
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(new ObjectMapper().writeValueAsString(ilha)))
+        .andExpect(status().isOk());
   }
 
   IlhaDto criaIlhaMock() {
