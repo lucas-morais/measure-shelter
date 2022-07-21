@@ -33,6 +33,16 @@ test
 test
 ```
 
+## Testando a aplicação
+
+Já na pasta raiz do projeto use o comando:
+
+```
+test 
+
+test
+```
+
 ## API Endpoints
 
 A aplicação contem os seguintes endpoints:
