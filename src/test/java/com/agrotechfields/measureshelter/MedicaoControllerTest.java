@@ -40,7 +40,7 @@ public class MedicaoControllerTest {
 
   @Test
 
-  @DisplayName("deve retornar lista vazia quanndo nao houver ilhas cadastradas medicoes cadastradas")
+  @DisplayName("deve retornar lista vazia quanndo nao houver medicoes cadastradas")
   void deve_retornar_lista_vazia() throws Exception {
     doReturn(List.of()).when(medicaoService).listar();
 
