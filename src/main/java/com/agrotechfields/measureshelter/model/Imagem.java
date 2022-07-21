@@ -20,6 +20,7 @@ public class Imagem {
   public Imagem() {
   }
   
+  /** constructor. */
   public Imagem(String id, String nome, Binary imagem) {
     this.id = id;
     this.nome = nome;

@@ -1,8 +1,10 @@
 package com.agrotechfields.measureshelter.controller;
 
+import com.agrotechfields.measureshelter.dto.ImagemDto;
+import com.agrotechfields.measureshelter.model.Imagem;
+import com.agrotechfields.measureshelter.service.ImagemService;
 import java.io.IOException;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -13,10 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
-import com.agrotechfields.measureshelter.dto.ImagemDto;
-import com.agrotechfields.measureshelter.model.Imagem;
-import com.agrotechfields.measureshelter.service.ImagemService;
 
 @RestController
 @RequestMapping("/imagens")
@@ -32,18 +30,14 @@ public class ImagemController {
     return ResponseEntity.status(201).body(imagemDto);
   }
 
-  @GetMapping(
-    value = "/{id}",
-    produces = MediaType.IMAGE_JPEG_VALUE
-  )
+  @GetMapping(value = "/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
   public ResponseEntity<byte[]> getPhoto(@PathVariable String id) {
     Imagem imagem = imagemService.buscarImagem(id);
-    
     return ResponseEntity.ok().body(imagem.getImagem().getData());
   }
 
   @GetMapping
-  public ResponseEntity<List<ImagemDto>>listar() {
+  public ResponseEntity<List<ImagemDto>> listar() {
     List<ImagemDto> imagens = imagemService.listarImagens();
     return ResponseEntity.ok(imagens);
   }

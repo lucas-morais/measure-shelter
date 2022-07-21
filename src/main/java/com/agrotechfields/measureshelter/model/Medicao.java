@@ -12,6 +12,7 @@ public class Medicao {
   private float umidadeAr;
   private float umidadeSolo;
 
+  /** constructor. */
   public Medicao(String id, float temperatura, float umidadeAr, float umidadeSolo) {
     super();
     this.id = id;

@@ -1,10 +1,15 @@
 package com.agrotechfields.measureshelter.controller;
 
-import java.util.List;
+import com.agrotechfields.measureshelter.dto.IlhaDto;
+import com.agrotechfields.measureshelter.dto.IlhaStatusDto;
+import com.agrotechfields.measureshelter.form.IlhaForm;
+import com.agrotechfields.measureshelter.form.IlhaStatusForm;
+import com.agrotechfields.measureshelter.model.Ilha;
+import com.agrotechfields.measureshelter.service.IlhaService;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,13 +21,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.agrotechfields.measureshelter.dto.IlhaDto;
-import com.agrotechfields.measureshelter.dto.IlhaStatusDto;
-import com.agrotechfields.measureshelter.form.IlhaForm;
-import com.agrotechfields.measureshelter.form.IlhaStatusForm;
-import com.agrotechfields.measureshelter.model.Ilha;
-import com.agrotechfields.measureshelter.service.IlhaService;
 
 @RestController
 @RequestMapping("/ilhas")
@@ -43,6 +41,7 @@ public class IlhaController {
     return ResponseEntity.status(201).body(ilha);
   }
 
+  /** Retorna ilha por id. */
   @GetMapping("/{id}")
   public ResponseEntity<IlhaDto> buscarPorId(@PathVariable String id) {
     IlhaDto ilha = ilhaService.buscarPorId(id);
@@ -52,10 +51,11 @@ public class IlhaController {
 
   @DeleteMapping("/{id}")
   @ResponseStatus(code = HttpStatus.NO_CONTENT)
-  public void deletar(@PathVariable String id ) {
+  public void deletar(@PathVariable String id) {
     ilhaService.deletar(id);
   }
 
+  /** Atualiza ilha por id. */
   @PutMapping("/{id}")
   public ResponseEntity<IlhaDto> atualizar(@RequestBody Ilha ilha, @PathVariable String id) {
     IlhaDto ilhaAtualizada = ilhaService.atualizar(ilha, id);
@@ -63,8 +63,10 @@ public class IlhaController {
     return ResponseEntity.ok(ilhaAtualizada);
   }
 
+  /** Altera status da ilha. */
   @PatchMapping("/{id}/status")
-  public ResponseEntity<IlhaStatusDto> status(@RequestBody IlhaStatusForm statusForm, @PathVariable String id) {
+  public ResponseEntity<IlhaStatusDto> status(
+      @RequestBody IlhaStatusForm statusForm, @PathVariable String id) {
     IlhaStatusDto ilhaStatus = ilhaService.status(statusForm.isStatus(), id);
 
     return ResponseEntity.ok(ilhaStatus);

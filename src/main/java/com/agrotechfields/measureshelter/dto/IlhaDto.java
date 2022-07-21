@@ -1,9 +1,9 @@
 package com.agrotechfields.measureshelter.dto;
 
-import java.util.List;
-
 import com.agrotechfields.measureshelter.model.Ilha;
 import com.agrotechfields.measureshelter.model.Medicao;
+import java.util.List;
+
 
 public class IlhaDto {
 
@@ -15,6 +15,7 @@ public class IlhaDto {
   
   private List<Medicao> medicoes;
 
+  /** Construct. */
   public IlhaDto(Ilha ilha) {
     this.id = ilha.getId();
     this.nome = ilha.getNome();

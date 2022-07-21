@@ -23,7 +23,14 @@ public class Ilha {
     this.medicoes = new ArrayList<>();
   }
 
-  public Ilha(String id, String nome, String latitude, String longitude, boolean operante, List<Medicao>medicoes) {
+  /** Constructor. */
+  public Ilha(
+      String id,
+      String nome,
+      String latitude,
+      String longitude,
+      boolean operante,
+      List<Medicao> medicoes) {
     this.id = id;
     this.nome = nome;
     this.latitude = latitude;
