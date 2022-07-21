@@ -1,6 +1,7 @@
 package com.agrotechfields.measureshelter.service;
 
 import com.agrotechfields.measureshelter.dto.ImagemDto;
+import com.agrotechfields.measureshelter.error.NotFoundException;
 import com.agrotechfields.measureshelter.model.Imagem;
 import com.agrotechfields.measureshelter.repository.ImagemRepository;
 import java.io.IOException;
@@ -28,7 +29,11 @@ public class ImagemService {
   }
 
   public Imagem buscarImagem(String id) {
-    return imagemRepository.findById(id).get();
+    try {
+      return imagemRepository.findById(id).get();
+    } catch (Exception e) {
+      throw new NotFoundException("Imagem não encontrada");
+    }
   }
 
 
