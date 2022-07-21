@@ -1,5 +1,6 @@
 package com.agrotechfields.measureshelter;
 
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
 
@@ -13,6 +14,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -83,7 +85,7 @@ public class IlhaControllerTest {
   }
 
   @Test
-  @DisplayName("Atualiza")
+  @DisplayName("deve atualizar ilha ao receber dados de uma ilha e id")
   public void deve_atualizar_ilha() throws JsonProcessingException, Exception {
     IlhaDto ilhaDto = criaIlhaMock();
     Ilha ilha = new Ilha("1", "novo nome", "-7.115", "-34.86306", true, List.of());
@@ -93,6 +95,14 @@ public class IlhaControllerTest {
         .contentType(MediaType.APPLICATION_JSON)
         .content(new ObjectMapper().writeValueAsString(ilha)))
         .andExpect(status().isOk());
+  }
+
+  @Test
+  @DisplayName("Deve apagar uma ilha recebendo o id")
+  public void deve_apagar_ilha() throws Exception {
+    doNothing().when(ilhaService).deletar("1");
+    mockMvc.perform(delete("/ilhas/1")).andExpect(status().isNoContent());
+  
   }
 
   IlhaDto criaIlhaMock() {
