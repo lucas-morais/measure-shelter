@@ -6,10 +6,11 @@
 * Docker
 * Docker compose
 * Java
-* Spring
+* Spring web
+* Spring data MongoDB
 * jUnit
+* Mockito
 * MongoDB
-* Hibernate
 * Heroku
 
 ## Como usar
@@ -72,8 +73,8 @@ A aplicação contem os seguintes endpoints:
 | Method | Description |
 |---|---|
 | `GET - localhost:8888/imagens` | Retorna todas as imagens. |
-| `GET - localhost:8888/imagens/{id}` | Retorna imagem por id. |
-| `POST - localhost:8888/imagens` | Cadastra uma nova imagem no banco de dados. |
+| `GET - localhost:8888/imagens/{id}` | Realiza download de uma imagem através do id. |
+| `POST - localhost:8888/imagens/{nome}` | Realiza o upload de uma nova imagem. |
 
 
 ## Authors
@@ -95,7 +96,7 @@ A aplicação contem os seguintes endpoints:
       </a>
     </td>
         <td align="center">
-      <a href="https://www.linkedin.com/in/rodolfomno/" target="_blank" rel="noopener noreferrer">
+      <a href="https://www.linkedin.com/in/dávio-lopes-719b0b189/" target="_blank" rel="noopener noreferrer">
         <sub>
           <b>Davio Lopes</b>
         </sub>
