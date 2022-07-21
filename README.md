@@ -1,5 +1,7 @@
 # Measure Shelter Project!
 
+Aplicação desenvolvida pela WiTrybe company, ultilizando inteligência atificial para automatizar o processo de plantação, realiza todo o monitorament das ilhas, através de medições e imagens.
+
 ## Tecnologias
 
 * Apache Maven
@@ -40,13 +42,12 @@ Raiz do projeto use o comando:
 mvn test
 ```
 
-## Link da aplicação no Heroku
+# [Link da aplicação no heroku](https://www.measure-shelter.herokuapp.com)
 
-measure-shelter.herokuapp.com
 
 ## API Endpoints
 
-A aplicação contem os seguintes endpoints:
+A aplicação contém os seguintes endpoints:
 
 # Ilha endpoint
 
